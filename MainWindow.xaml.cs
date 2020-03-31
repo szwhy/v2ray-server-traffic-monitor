@@ -31,6 +31,9 @@ namespace v2ray_traffic_info
         public static int userNum;//存储用户数据总数
         public static string[,] allUser;//存储处理后的用户信息数组
         public static string[,] oldAllUser;//存储实时刷新前一次的用户信息
+
+        public static int close = 0;
+        public static int wait = 0;
     }
 
     /// <summary>
@@ -44,6 +47,7 @@ namespace v2ray_traffic_info
         }
         public void Button_Click(object sender, RoutedEventArgs e)
         {
+            button.IsEnabled = false;
             Info.apiaddress = textBox_apiadd.Text;//获取用户输入API地址
             Thread getInfoThread = new Thread(new ThreadStart(MainProgram.GetInfo))
             {
@@ -53,6 +57,7 @@ namespace v2ray_traffic_info
         }
         public void Button_process_Click(object sender, RoutedEventArgs e)
         {
+            Info.wait = 0;
             MainProgram.GetAllUser();//处理Info.v2return中得到的信息，输出为Info.allUser
             SetDataGrid();//以Info.allUser刷新数据表格
         }
@@ -60,7 +65,7 @@ namespace v2ray_traffic_info
         public void SetDataGrid()
         {
             userList = new ObservableCollection<Users>();
-            if (Info.allUser.Length == 0)
+            if (Info.allUser == null || Info.allUser.Length == 0)
             { return; }//Info.allUser中无数据
             for (int i = 0; i < Info.allUser.Length / 5; i++)//将Info.allUser填入userList
             {
@@ -90,7 +95,7 @@ namespace v2ray_traffic_info
         }
         public void DataGridSort(string ColumnName, ListSortDirection DescOrAsce)
         {
-            Action action1 = () =>
+            void action1()
             {
                 dataGrid.ItemsSource = userList;//刷新表格
                 ICollectionView v = CollectionViewSource.GetDefaultView(userList);
@@ -98,14 +103,29 @@ namespace v2ray_traffic_info
                 v.SortDescriptions.Add(new SortDescription(ColumnName, DescOrAsce));
                 v.Refresh();
                 dataGrid.ColumnFromDisplayIndex(4).SortDirection = DescOrAsce;//排序表格
-            };
-            dataGrid.Dispatcher.Invoke(action1);
+                checkBox_StartFlash.IsEnabled = true;
+            }
+            void action2()
+            {
+                checkBox_StartFlash.IsEnabled = true;
+                button.IsEnabled = true;
+                button_process.IsEnabled = true;
+            }
+            if (Info.close == 1)
+            { return; }
+            if (Info.wait == 1)
+            { Dispatcher.InvokeAsync(action2); return; }
+            dataGrid.Dispatcher.InvokeAsync(action1);
         }
         public System.Timers.Timer t;
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (checkBox_StartFlash.IsChecked == true)
             {
+                Info.wait = 0;
+                button.IsEnabled = false;
+                button_process.IsEnabled = false;
+                checkBox_StartFlash.IsEnabled = false;
                 Info.setFlash = 1;
                 Info.apiaddress = textBox_apiadd.Text;
                 Thread getInfoThread = new Thread(new ThreadStart(MainProgram.GetInfo))
@@ -122,7 +142,11 @@ namespace v2ray_traffic_info
             }
             else
             {
+                button.IsEnabled = false;
+                button_process.IsEnabled = false;
+                checkBox_StartFlash.IsEnabled = false;
                 Info.setFlash = 0;
+                Info.wait = 1;
             }
         }
         public void StartSetDataGrid(object source, System.Timers.ElapsedEventArgs e)
@@ -138,6 +162,10 @@ namespace v2ray_traffic_info
                 t.AutoReset = false;
                 t.Enabled = false;
             }
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Info.close = 1;
         }
     }
     public class Users
@@ -205,7 +233,7 @@ namespace v2ray_traffic_info
             while (size >= 1024 && o < sizes.Length - 1)
             {
                 o++;
-                size = size / 1024;
+                size /= 1024;
             }
             string result = string.Format("{0:0.##} {1}", size, sizes[o]);
             return result;
