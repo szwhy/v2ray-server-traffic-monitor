@@ -5,6 +5,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>v2ray_traffic_info</RootNamespace>
     <UseWPF>true</UseWPF>
+    <PackageId>v2ray-server-traffic-monitor</PackageId>
+    <Authors>szwhy</Authors>
+    <Company>szwhy</Company>
+    <Product>v2ray-server-traffic-monitor</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
 </Project>
