@@ -118,7 +118,7 @@ namespace v2ray_traffic_info
             dataGrid.Dispatcher.InvokeAsync(action1);
         }
         public System.Timers.Timer t;
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             if (checkBox_StartFlash.IsChecked == true)
             {
@@ -149,7 +149,7 @@ namespace v2ray_traffic_info
                 Info.wait = 1;
             }
         }
-        public void StartSetDataGrid(object source, System.Timers.ElapsedEventArgs e)
+        public void StartSetDataGrid(object source, ElapsedEventArgs e)
         {
             t.Stop();
             SetDataGrid();
@@ -166,6 +166,17 @@ namespace v2ray_traffic_info
         private void Window_Closed(object sender, EventArgs e)
         {
             Info.close = 1;
+        }
+        private void CheckBox_Up_Click(object sender, RoutedEventArgs e)
+        {
+            if(checkBox_Up.IsChecked == true)
+            {
+                MainWindows.Topmost = true;
+            }
+            else
+            {
+                MainWindows.Topmost = false;
+            }
         }
     }
     public class Users
@@ -240,7 +251,7 @@ namespace v2ray_traffic_info
         }
         public static void GetAllUser()
         {
-            string[] baseInfo = MainProgram.SplitOutputInfo(Info.v2return);//分割原始信息为块
+            string[] baseInfo = SplitOutputInfo(Info.v2return);//分割原始信息为块
             if (baseInfo == null || baseInfo.Length == 0)
             { return; }//获得数据为空
             string cache;
@@ -266,7 +277,7 @@ namespace v2ray_traffic_info
                 cache = cache.Replace(">", "");
                 cache = cache.Replace("\n", "");
                 result[i, 3] = cache;//流量字节
-                result[i, 4] = MainProgram.HumanReadableSize(Convert.ToDouble(cache));//转为可阅读文本
+                result[i, 4] = HumanReadableSize(Convert.ToDouble(cache));//转为可阅读文本
             }
 
             Info.allUser = new string[Info.userNum / 2, 5];
