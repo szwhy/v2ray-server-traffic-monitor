@@ -40,7 +40,6 @@ namespace v2ray_traffic_info
         {
             InitializeComponent();
         }
-
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             Info.apiaddress = textBox_apiadd.Text;
@@ -50,16 +49,17 @@ namespace v2ray_traffic_info
             };
             getInfoThread.Start();
         }
-
         public void Button_process_Click(object sender, RoutedEventArgs e)
         {
             MainProgram.GetAllUser();
             SetDataGrid();
         }
-
+        ObservableCollection<Users> userList;
         public void SetDataGrid()
         {
-            ObservableCollection<Users> userList = new ObservableCollection<Users>();
+            userList = new ObservableCollection<Users>();
+            if (Info.allUser.Length == 0)
+            { return; }
             for (int i = 0; i < Info.allUser.Length / 4; i++)
             {
                 userList.Add(new Users()
@@ -70,20 +70,19 @@ namespace v2ray_traffic_info
                     Byte = System.Convert.ToInt64(Info.allUser[i, 3]),
                 });
             }
-            Action action1 = () =>
-            {
-                dataGrid.ItemsSource = userList;
-            };
-            dataGrid.Dispatcher.Invoke(action1);
-            
+            //Action action1 = () =>
+            //{
+            //    dataGrid.ItemsSource = userList;
+            //};
+            //dataGrid.Dispatcher.Invoke(action1);
             DataGridSort("Byte", ListSortDirection.Descending);
         }
-
         public void DataGridSort(string ColumnName, ListSortDirection DescOrAsce)
         {
             Action action1 = () =>
             {
-                ICollectionView v = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+                dataGrid.ItemsSource = userList;
+                ICollectionView v = CollectionViewSource.GetDefaultView(userList);
                 v.SortDescriptions.Clear();
                 v.SortDescriptions.Add(new SortDescription(ColumnName, DescOrAsce));
                 v.Refresh();
@@ -91,9 +90,7 @@ namespace v2ray_traffic_info
             };
             dataGrid.Dispatcher.Invoke(action1);
         }
-
         public System.Timers.Timer t;
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (checkBox_StartFlash.IsChecked == true)

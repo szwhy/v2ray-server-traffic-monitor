@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:v2ray_traffic_info"
         mc:Ignorable="d"
-        Title="V2Ray Server Traffic Monitor" Height="554" Width="569" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="V2Ray Server Traffic Monitor" Height="554" Width="469" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="button" Content="获取信息" HorizontalAlignment="Left" Height="40" Margin="10,466,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
         <TextBox x:Name="debugTextBox" HorizontalAlignment="Left" Height="162" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Margin="10,10,0,0" IsEnabled="False" IsTabStop="False" Focusable="False" AllowDrop="False" Visibility="Hidden"/>
