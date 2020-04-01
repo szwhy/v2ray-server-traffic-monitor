@@ -1,6 +1,7 @@
 # v2ray-server-traffic-monitor
 
-这是一个通过 [V2Ctl API](https://www.v2fly.org/chapter_00/command.html#v2ctl-api) 获取 V2Ray 服务端统计数据，列表显示各用户实时通过流量的 Windows 小工具。
+这是一个通过 [V2Ctl API](https://www.v2fly.org/chapter_00/command.html#v2ctl-api) 获取 V2Ray 服务端统计数据，列表显示各用户实时通过流量的 Windows 小工具。  
+![](https://raw.githubusercontent.com/szwhy/v2ray-server-traffic-monitor/master/img/Windows.png)
 
 ## 内容列表
 
