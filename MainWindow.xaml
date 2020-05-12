@@ -11,10 +11,11 @@
         <TextBox x:Name="debugTextBox" HorizontalAlignment="Left" Height="162" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Margin="10,10,0,0" IsEnabled="False" IsTabStop="False" Focusable="False" AllowDrop="False" Visibility="Hidden"/>
         <Button x:Name="button_process" Content="处理信息" HorizontalAlignment="Left" Height="40" Margin="115,466,0,0" VerticalAlignment="Top" Width="100" Click="Button_process_Click" Visibility="Hidden"/>
         <DataGrid x:Name="dataGrid" Focusable="False" CanUserResizeRows="False" Margin="0,0,0,40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Panel.ZIndex="1" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
-        <TextBox x:Name="textBox_apiadd" Text="127.0.0.1:6005" TextWrapping="Wrap" FontSize="14" Margin="42,0,0,11" Width="130" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="textBox_apiadd" TextWrapping="Wrap" FontSize="14" Margin="42,0,0,11" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
         <TextBlock x:Name="textBlock" Text="API:" TextWrapping="NoWrap" FontSize="14" Margin="10,0,0,10" Width="40" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-        <CheckBox x:Name="checkBox_StartFlash" Content="实时刷新" Click="CheckBox_Click" Margin="180,0,0,9" Width="90" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-        <CheckBox x:Name="checkBox_Up" Content="窗口置顶" Click="CheckBox_Up_Click" Margin="260,0,0,9" Width="90" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="checkBox_StartFlash" Content="实时刷新" Click="CheckBox_Click" Margin="200,0,0,9" Width="90" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="checkBox_Up" Content="窗口置顶" Click="CheckBox_Up_Click" Margin="280,0,0,9" Width="90" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="checkBox_Save" Content="保存数据" Click="CheckBox_Save_Click" Margin="360,0,0,9" Width="90" Height="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Hidden"/>
 
     </Grid>
 </Window>

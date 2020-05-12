@@ -178,6 +178,11 @@ namespace v2ray_traffic_info
                 MainWindows.Topmost = false;
             }
         }
+
+        private void CheckBox_Save_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     public class Users
     {
@@ -277,7 +282,14 @@ namespace v2ray_traffic_info
                 cache = cache.Replace(">", "");
                 cache = cache.Replace("\n", "");
                 result[i, 3] = cache;//流量字节
-                result[i, 4] = HumanReadableSize(Convert.ToDouble(cache));//转为可阅读文本
+                if (!string.IsNullOrEmpty(cache))
+                {
+                    result[i, 4] = HumanReadableSize(Convert.ToDouble(cache));//转为可阅读文本
+                }
+                else
+                {
+                    result[i, 4] = "0 B";
+                }
             }
 
             Info.allUser = new string[Info.userNum / 2, 5];
